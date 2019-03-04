@@ -1,31 +1,23 @@
 package sample.base.app.di.module
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import sample.base.app.BuildConfig
-import sample.base.app.network.AppService
-import sample.base.app.network.interceptor.AppInterceptor
+import sample.base.app.data.network.AppService
+import sample.base.app.data.network.interceptor.AppInterceptor
 import sample.base.app.utils.Network
-import java.security.KeyStore
-import java.security.SecureRandom
-import java.security.cert.CertificateException
-import java.security.cert.X509Certificate
-import java.util.concurrent.TimeUnit
-import javax.net.ssl.*
 
-class NetworkModule {
-    val networkModule = module {
-        single { createOkHttpClient() }
-        single { createRetrofit(get()) }
-        single { createAppService(get()) }
+val networkModule = module {
+    single { createOkHttpClient() }
+    single { createRetrofit(get()) }
+    single { createAppService(get()) }
+}
 
-    }
-
-    fun createOkHttpClient(): OkHttpClient {
+fun createOkHttpClient(): OkHttpClient {
 //        val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
 //            override fun getAcceptedIssuers(): Array<X509Certificate> {
 //                return arrayOf()
@@ -68,22 +60,21 @@ class NetworkModule {
 //                    }
 //                })
 
-        val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
-        val clientBuilder = OkHttpClient.Builder()
-        clientBuilder.addInterceptor(AppInterceptor())
-        if (BuildConfig.DEBUG) {
-            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-            clientBuilder.addInterceptor(httpLoggingInterceptor)
-        }
-        return clientBuilder.build()
+    val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
+    val clientBuilder = OkHttpClient.Builder()
+    clientBuilder.addInterceptor(AppInterceptor())
+    if (BuildConfig.DEBUG) {
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        clientBuilder.addInterceptor(httpLoggingInterceptor)
     }
-
-    fun createRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-            .baseUrl(Network.BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .build()
-
-    fun createAppService(retrofit: Retrofit): AppService = retrofit.create(AppService::class.java)
+    return clientBuilder.build()
 }
+
+fun createRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
+    .baseUrl(Network.BASE_URL)
+    .client(okHttpClient)
+    .addConverterFactory(GsonConverterFactory.create())
+    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+    .build()
+
+fun createAppService(retrofit: Retrofit): AppService = retrofit.create(AppService::class.java)

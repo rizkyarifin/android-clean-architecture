@@ -1,4 +1,4 @@
-package sample.base.app.model
+package sample.base.app.data.model
 
 import java.io.Serializable
 

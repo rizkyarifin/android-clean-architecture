@@ -1,4 +1,4 @@
-package sample.base.app.network.interceptor
+package sample.base.app.data.network.interceptor
 
 import okhttp3.Interceptor
 import okhttp3.Response
