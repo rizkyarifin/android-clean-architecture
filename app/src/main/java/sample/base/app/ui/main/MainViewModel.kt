@@ -1,25 +1,39 @@
 package sample.base.app.ui.main
 
-import android.util.Log
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
+import sample.base.app.base.BaseState
 import sample.base.app.base.BaseViewModel
 import sample.base.app.data.network.repository.Repository
-import sample.base.app.utils.rx.SchedulerProvider
 import sample.base.app.utils.ext.with
-import java.lang.System.err
+import sample.base.app.utils.rx.SchedulerProvider
 
-class MainViewModel(private val repo : Repository,
-                    private val scheduler: SchedulerProvider) : BaseViewModel(){
+class MainViewModel(
+    private val repo: Repository,
+    private val scheduler: SchedulerProvider
+) : BaseViewModel() {
 
-    fun getNews(){
+    private val mData = MutableLiveData<BaseState>()
+
+    fun getNewsData(): LiveData<BaseState> {
+        return mData
+    }
+
+    init {
+        getNews()
+    }
+
+    fun getNews() {
         launch {
+            mData.value = BaseState.Loading
 
             repo.getNews().with(scheduler).subscribe(
                 {
-                    Log.d("Test", "Success")
+                    mData.value = BaseState.Data(it.articles)
                 },
                 { err ->
+                    mData.value = BaseState.Error
                     err.printStackTrace()
-                    Log.d("Test", "Error")
                 })
         }
     }

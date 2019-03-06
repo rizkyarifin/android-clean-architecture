@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.support.annotation.CallSuper
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import sample.base.app.data.network.repository.Repository
+
 
 open class BaseViewModel : ViewModel(){
 
