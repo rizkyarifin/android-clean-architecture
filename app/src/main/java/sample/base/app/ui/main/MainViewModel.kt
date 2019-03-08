@@ -26,13 +26,12 @@ class MainViewModel(
     fun getNews() {
         launch {
             mData.value = BaseState.Loading
-
             repo.getNews().with(scheduler).subscribe(
                 {
                     mData.value = BaseState.Data(it.articles)
                 },
                 { err ->
-                    mData.value = BaseState.Error
+                    mData.value = BaseState.Error(err)
                     err.printStackTrace()
                 })
         }

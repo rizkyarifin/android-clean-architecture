@@ -10,6 +10,7 @@ import sample.base.app.BuildConfig
 import sample.base.app.data.network.AppService
 import sample.base.app.data.network.interceptor.AppInterceptor
 import sample.base.app.utils.Network
+import java.util.concurrent.TimeUnit
 
 val networkModule = module {
     single { createOkHttpClient() }
@@ -22,6 +23,9 @@ fun createOkHttpClient(): OkHttpClient {
     val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
     val clientBuilder = OkHttpClient.Builder()
     clientBuilder.addInterceptor(AppInterceptor())
+        .connectTimeout(1, TimeUnit.MINUTES)
+        .writeTimeout(1, TimeUnit.MINUTES)
+        .readTimeout(1, TimeUnit.MINUTES)
     if (BuildConfig.DEBUG) {
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         clientBuilder.addInterceptor(httpLoggingInterceptor)

@@ -15,6 +15,9 @@ import sample.base.app.R
 import sample.base.app.base.BaseActivity
 import sample.base.app.base.BaseState
 import sample.base.app.data.model.Article
+import sample.base.app.data.model.HttpCallFailureException
+import sample.base.app.data.model.NoNetworkException
+import sample.base.app.data.model.ServerUnreachableException
 
 class MainActivity : BaseActivity() {
 
@@ -32,18 +35,28 @@ class MainActivity : BaseActivity() {
     fun observeData() {
         mainViewModel.getNewsData().observe(this, Observer { it ->
             when (it) {
-                is BaseState.Error -> {
+                is BaseState.Error<*> -> {
                     dismissLoading()
-                    Log.d("Main", "Error")
+                    displayError(it.error as Throwable)
                 }
                 is BaseState.Data<*> -> {
                     dismissLoading()
+                    Log.d("Jaja", "Success")
                     mainAdapter.items = it.data as List<Article>
                     mainAdapter.notifyDataSetChanged()
                 }
                 is BaseState.Loading -> showLoading()
             }
         })
+    }
+
+    private fun displayError(error: Throwable) {
+        when (error) {
+            is NoNetworkException -> Log.d("Jaja", "Network")
+            is ServerUnreachableException -> Log.d("Jaja", "Server")
+            is HttpCallFailureException -> Log.d("Jaja", "Http")
+            else -> Log.d("Jaja", "Generic")
+        }
     }
 
     fun initData(){
