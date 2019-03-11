@@ -8,6 +8,6 @@ import sample.base.app.utils.ext.mapNetworkErrors
 
 class Repository (private val appService: AppService) {
 
-    fun getNews() : Single<NewsResponse> =
-        appService.getTopHeadLines("us", 1).mapNetworkErrors()
+    fun getNews() : Observable<NewsResponse> =
+        appService.getTopHeadLines("us", 1)
 }

@@ -19,5 +19,3 @@ fun <T> Single<T>.mapNetworkErrors(): Single<T> =
             else -> Single.error(error)
         }
     }
-
-fun <T> Observable<T>.mapNetworkErrors(): Observable<T> =

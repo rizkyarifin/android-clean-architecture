@@ -1,8 +1,6 @@
 package sample.base.app.ui.main
 
 import android.arch.lifecycle.Observer
-import android.opengl.Visibility
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -15,9 +13,6 @@ import sample.base.app.R
 import sample.base.app.base.BaseActivity
 import sample.base.app.base.BaseState
 import sample.base.app.data.model.Article
-import sample.base.app.data.model.HttpCallFailureException
-import sample.base.app.data.model.NoNetworkException
-import sample.base.app.data.model.ServerUnreachableException
 
 class MainActivity : BaseActivity() {
 
@@ -33,11 +28,11 @@ class MainActivity : BaseActivity() {
     }
 
     fun observeData() {
-        mainViewModel.getNewsData().observe(this, Observer { it ->
+        mainViewModel.mDataNews.observe(this, Observer { it ->
             when (it) {
                 is BaseState.Error<*> -> {
                     dismissLoading()
-                    displayError(it.error as Throwable)
+                    displayError(it.error as String)
                 }
                 is BaseState.Data<*> -> {
                     dismissLoading()
@@ -50,13 +45,8 @@ class MainActivity : BaseActivity() {
         })
     }
 
-    private fun displayError(error: Throwable) {
-        when (error) {
-            is NoNetworkException -> Log.d("Jaja", "Network")
-            is ServerUnreachableException -> Log.d("Jaja", "Server")
-            is HttpCallFailureException -> Log.d("Jaja", "Http")
-            else -> Log.d("Jaja", "Generic")
-        }
+    private fun displayError(message : String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     fun initData(){

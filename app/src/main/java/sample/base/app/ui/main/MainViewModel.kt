@@ -13,11 +13,10 @@ class MainViewModel(
     private val scheduler: SchedulerProvider
 ) : BaseViewModel() {
 
-    private val mData = MutableLiveData<BaseState>()
+    private val dataNews = MutableLiveData<BaseState>()
 
-    fun getNewsData(): LiveData<BaseState> {
-        return mData
-    }
+    val mDataNews : LiveData<BaseState>
+        get() = dataNews
 
     init {
         getNews()
@@ -25,13 +24,13 @@ class MainViewModel(
 
     fun getNews() {
         launch {
-            mData.value = BaseState.Loading
+            dataNews.value = BaseState.Loading
             repo.getNews().with(scheduler).subscribe(
                 {
-                    mData.value = BaseState.Data(it.articles)
+                    dataNews.value = BaseState.Data(it.articles)
                 },
                 { err ->
-                    mData.value = BaseState.Error(err)
+                    dataNews.value = BaseState.Error(handleError(err))
                     err.printStackTrace()
                 })
         }
