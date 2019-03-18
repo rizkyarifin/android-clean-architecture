@@ -10,5 +10,6 @@ interface AppService {
 
     @GET("top-headlines")
     fun getTopHeadLines(@Query("country") country : String,
-                        @Query("page") page : Int) : Observable<NewsResponse>
+                        @Query("page") page : Int,
+                        @Query("apiKey") apiKey : String) : Observable<NewsResponse>
 }

@@ -4,7 +4,7 @@ import java.io.Serializable
 
 data class NewsResponse(val status: String,
                         val totalResults: Int,
-                        val articles: MutableList<Article>) : Serializable
+                        val articles: List<Article>) : Serializable
 
 data class Article(val source: Source,
                    val author: String,
