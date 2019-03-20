@@ -1,6 +1,7 @@
 package sample.base.app.base
 
 import android.arch.lifecycle.ViewModel
+import android.databinding.ObservableBoolean
 import android.support.annotation.CallSuper
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -12,6 +13,7 @@ import java.net.UnknownHostException
 
 open class BaseViewModel : ViewModel(){
 
+    val isLoading = ObservableBoolean(false)
     val mCompositeDisposable = CompositeDisposable()
 
     fun launch(job:() -> Disposable) {

@@ -9,14 +9,16 @@ buildscript {
     ext.retrofitVersion = '2.5.0'
     ext.okhttpVersion = '3.13.1'
     ext.retrofitCoroutinesVersion = '0.9.2'
+    ext.compilerVersion = '3.3.0'
 
     repositories {
         google()
         jcenter()
-        
+
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath "com.android.tools.build:gradle:$compilerVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
