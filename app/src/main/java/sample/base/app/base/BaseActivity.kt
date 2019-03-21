@@ -4,8 +4,6 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
-import android.widget.ProgressBar
 
 
 abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : AppCompatActivity() {
@@ -14,7 +12,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : AppCompatA
     lateinit var mViewModel: V
 
     abstract fun getBindingVariable() : Int
-    abstract fun getViewModel() : V
+    abstract fun getVM() : V
     abstract fun getLayoutId() : Int
     abstract fun letStart()
 
@@ -22,11 +20,15 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : AppCompatA
         super.onCreate(savedInstanceState)
         initBinding()
         letStart()
+
+        mViewModel.apply {
+
+        }
     }
 
     private fun initBinding(){
         mBinding = DataBindingUtil.setContentView(this, getLayoutId())
-        this.mViewModel = if (mViewModel == null) getViewModel() else mViewModel
+        this.mViewModel = if (::mViewModel.isInitialized) mViewModel else getVM()
         mBinding.setVariable(getBindingVariable(), mViewModel)
         mBinding.executePendingBindings()
     }
