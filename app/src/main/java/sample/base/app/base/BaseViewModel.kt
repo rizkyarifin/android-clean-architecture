@@ -1,8 +1,9 @@
 package sample.base.app.base
 
-import android.arch.lifecycle.ViewModel
-import android.databinding.ObservableBoolean
+import android.databinding.ObservableField
 import android.support.annotation.CallSuper
+import androidx.lifecycle.ViewModel
+import com.hadilq.liveevent.LiveEvent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import retrofit2.HttpException
@@ -13,7 +14,8 @@ import java.net.UnknownHostException
 
 open class BaseViewModel : ViewModel(){
 
-    val isLoading = ObservableBoolean(false)
+    val isLoading = ObservableField<Boolean>(false)
+    val showMessage = LiveEvent<String>()
     val mCompositeDisposable = CompositeDisposable()
 
     fun launch(job:() -> Disposable) {

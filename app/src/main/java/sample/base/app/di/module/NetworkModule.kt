@@ -1,22 +1,18 @@
 package sample.base.app.di.module
 
 import android.app.Application
-import android.content.Context
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
-import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import sample.base.app.BuildConfig
 import sample.base.app.data.network.AppService
-import sample.base.app.data.network.interceptor.AppInterceptor
 import sample.base.app.utils.Network
 import sample.base.app.utils.ext.hasNetwork
-import java.util.concurrent.TimeUnit
 
 val networkModule = module {
     single { createOkHttpClient(androidApplication()) }

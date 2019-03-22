@@ -1,7 +1,7 @@
 package sample.base.app.ui.main
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import sample.base.app.base.BaseViewModel
 import sample.base.app.data.model.Article
 import sample.base.app.data.network.repository.NewsRepository
@@ -32,7 +32,7 @@ class MainViewModel(
                 },
                 { err ->
                     isLoading.set(false)
-                    err.printStackTrace()
+                    showMessage.value = handleError(err)
                 })
         }
     }

@@ -1,11 +1,8 @@
 package sample.base.app.ui.main
 
-import android.arch.lifecycle.Observer
-import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.viewmodel.ext.android.getViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import androidx.lifecycle.Observer
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import sample.base.app.R
 import sample.base.app.base.BaseActivity
 import sample.base.app.databinding.ActivityMainBinding
@@ -33,13 +30,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         })
     }
 
-    private fun displayError(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
     fun initData() {
         mainAdapter = MainAdapter(listOf())
-        rv_news.layoutManager = LinearLayoutManager(this)
-        rv_news.adapter = mainAdapter
+//        rv_news.layoutManager = LinearLayoutManager(this)
+//        rv_news.adapter = mainAdapter
     }
 }

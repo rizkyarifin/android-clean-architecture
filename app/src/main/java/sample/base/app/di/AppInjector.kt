@@ -1,9 +1,7 @@
 package sample.base.app.di
 
-import android.app.Application
-import android.content.Context
-import org.koin.android.viewmodel.ext.koin.viewModel
-import org.koin.dsl.module.module
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 import sample.base.app.data.network.repository.NewsRepository
 import sample.base.app.data.network.repository.NewsRepositoryImpl
 import sample.base.app.ui.main.MainViewModel
