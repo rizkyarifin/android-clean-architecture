@@ -13,8 +13,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
         <ProgressBar
+                app:viewState="@{viewModel.isLoading}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"

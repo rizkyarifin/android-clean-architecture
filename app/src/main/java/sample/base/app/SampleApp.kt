@@ -2,7 +2,6 @@ package sample.base.app
 
 import android.app.Application
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import sample.base.app.di.appModule
 import sample.base.app.di.module.networkModule
