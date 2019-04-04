@@ -10,7 +10,7 @@ import sample.base.app.data.model.Article
 
 class MainAdapter(var items : List<Article>) : RecyclerView.Adapter<MainAdapter.NewsViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, p1: Int): NewsViewHolder
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder
             = NewsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_news, parent, false))
 
     override fun getItemCount(): Int = items.size

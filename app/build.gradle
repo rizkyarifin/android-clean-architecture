@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 
-//apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-kapt'
 
 apply plugin: 'kotlin-android'
 
@@ -34,45 +34,37 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlin"
+    implementation "androidx.appcompat:appcompat:$rootProject.appCompat"
+    implementation "androidx.legacy:legacy-support-v4:$rootProject.support"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayout"
+    implementation "com.google.android.material:material:$rootProject.material"
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.google.android.material:material:1.1.0-alpha04'
 
-//    kapt "com.android.databinding:compiler:3.2.0"
-
-    // injection
-    implementation "org.koin:koin-androidx-viewmodel:$rootProject.koinVersion"
-//    implementation "org.koin:koin-androidx:$rootProject.koinVersion"
+    // Injection
+    implementation "org.koin:koin-androidx-viewmodel:$rootProject.koin"
     // Room components
-    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
-    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
-    androidTestImplementation "android.arch.persistence.room:testing:$rootProject.roomVersion"
+    implementation "android.arch.persistence.room:runtime:$rootProject.room"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.room"
+    androidTestImplementation "android.arch.persistence.room:testing:$rootProject.room"
     // Lifecycle components
-    implementation "androidx.lifecycle:lifecycle-extensions:2.1.0-alpha03"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.1.0-alpha03"
-    // Rx
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    // Retrofit
-    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
-
-    implementation 'com.github.huteri:analogclock:0.0.2'
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycle"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycle"
     implementation "com.github.hadilq.liveevent:liveevent:1.0.1"
-}
+    // Rx
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJava"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroid"
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.rxJavaAdapter"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp"
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$rootProject.glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glide"
 
-//kotlin {
-//    experimental {
-//        coroutines "enable"
-//    }
-//}
-//kapt {
-//    generateStubs = true
-//}
+//    implementation 'com.github.huteri:analogclock:0.0.2'
+}
