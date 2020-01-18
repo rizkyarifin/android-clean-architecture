@@ -9,7 +9,8 @@ import sample.base.app.utils.ext.hasNetwork
 import sample.base.app.utils.ext.showToast
 
 
-abstract class BaseActivity<B : ViewDataBinding, V : BaseViewModel> : AppCompatActivity(), BaseFragment.Callback {
+abstract class BaseActivity<B : ViewDataBinding, V : BaseViewModel> : BaseBasicActivity(),
+    BaseFragment.Callback {
 
     lateinit var mBinding: B
     lateinit var mViewModel: V
@@ -22,19 +23,21 @@ abstract class BaseActivity<B : ViewDataBinding, V : BaseViewModel> : AppCompatA
     val isNetworkConnected: Boolean
         get() = hasNetwork(applicationContext)!!
 
-    override fun onFragmentAttached() {
+    override fun onFragmentAttached() {}
 
-    }
-
-    override fun onFragmentDetached(tag: String) {
-
-    }
+    override fun onFragmentDetached(tag: String) {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initDataBinding()
         letStart()
         handleMessage()
+        checkNetwork()
+    }
+
+    private fun checkNetwork() {
+        if (!isNetworkConnected)
+            showToast("No connection available")
     }
 
     private fun handleMessage() {

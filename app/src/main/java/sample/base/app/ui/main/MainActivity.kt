@@ -23,7 +23,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private lateinit var mainAdapter: MainAdapter
 
-    fun observeData() {
+    private fun observeData() {
         mViewModel.mDataNews.observe(this, Observer { resource ->
             resource?.let {
                 mainAdapter.items = it
@@ -32,7 +32,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         })
     }
 
-    fun initData() {
+    private fun initData() {
         mainAdapter = MainAdapter(listOf())
         rv_news.layoutManager = LinearLayoutManager(this)
         rv_news.adapter = mainAdapter

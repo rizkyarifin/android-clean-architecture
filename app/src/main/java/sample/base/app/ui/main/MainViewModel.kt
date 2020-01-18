@@ -22,7 +22,7 @@ class MainViewModel(
         getNews()
     }
 
-    fun getNews() {
+    private fun getNews() {
         launch {
             isLoading.set(true)
             repo.getNews().with(scheduler).subscribe(
