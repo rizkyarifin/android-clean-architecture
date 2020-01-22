@@ -1,28 +1,53 @@
 package sample.base.app.ui.main
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_news.view.*
-import sample.base.app.R
 import sample.base.app.data.model.Article
+import sample.base.app.utils.view.State
 
-class MainAdapter(var items : List<Article>) : RecyclerView.Adapter<MainAdapter.NewsViewHolder>() {
+class MainAdapter(private val retry: () -> Unit)
+    : PagedListAdapter<Article, RecyclerView.ViewHolder>(NewsDiffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder
-            = NewsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_news, parent, false))
+    private val DATA_VIEW_TYPE = 1
+    private val FOOTER_VIEW_TYPE = 2
 
-    override fun getItemCount(): Int = items.size
+    private var state = State.LOADING
 
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        holder.bind(items[position])
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
+            = if (viewType == DATA_VIEW_TYPE) NewsViewHolder.create(parent) else ListFooterViewHolder.create(retry, parent)
+
+    override fun getItemCount(): Int = super.getItemCount() + if (hasFooter()) 1 else 0
+
+    override fun getItemViewType(position: Int): Int {
+        return if (position < super.getItemCount()) DATA_VIEW_TYPE else FOOTER_VIEW_TYPE
     }
 
-    inner class NewsViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(article: Article){
-            itemView.tv_title.text = article.title
-            itemView.tv_desc.text = article.description
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (getItemViewType(position) == DATA_VIEW_TYPE)
+            getItem(position)?.let { (holder as NewsViewHolder).bind(it) }
+        else (holder as ListFooterViewHolder).bind(state)
+    }
+
+    private fun hasFooter(): Boolean {
+        return super.getItemCount() != 0 && (state == State.LOADING || state == State.ERROR)
+    }
+
+    fun setState(state: State) {
+        this.state = state
+        notifyItemChanged(super.getItemCount())
+    }
+
+    companion object {
+        val NewsDiffCallback = object : DiffUtil.ItemCallback<Article>() {
+            override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
+                return oldItem.title == newItem.title
+            }
+
+            override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
+                return oldItem == newItem
+            }
         }
     }
 }

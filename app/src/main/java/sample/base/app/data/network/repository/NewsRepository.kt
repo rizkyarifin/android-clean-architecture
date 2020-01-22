@@ -6,11 +6,11 @@ import sample.base.app.data.network.AppService
 import sample.base.app.utils.Network
 
 interface NewsRepository {
-    fun getNews() : Observable<NewsResponse>
+//    fun getNews() : Observable<NewsResponse>
 }
 
 class NewsRepositoryImpl (private val appService: AppService) : NewsRepository {
 
-    override fun getNews() : Observable<NewsResponse> =
-        appService.getTopHeadLines("us", 1, Network.API_KEY)
+//    override fun getNews() : Observable<NewsResponse> =
+//        appService.getNews("us", 1, Network.API_KEY)
 }

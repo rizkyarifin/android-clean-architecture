@@ -8,8 +8,6 @@ import sample.base.app.data.model.NewsResponse
 
 interface AppService {
 
-    @GET("top-headlines")
-    fun getTopHeadLines(@Query("country") country : String,
-                        @Query("page") page : Int,
-                        @Query("apiKey") apiKey : String) : Observable<NewsResponse>
+    @GET("everything?q=sports&apiKey=aa67d8d98c8e4ad1b4f16dbd5f3be348")
+    fun getNews(@Query("page") page: Int, @Query("pageSize") pageSize: Int): Single<NewsResponse>
 }
